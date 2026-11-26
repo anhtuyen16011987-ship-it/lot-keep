@@ -1,0 +1,62 @@
+name: Build IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cai thu vien
+        run: npm install
+
+      - name: Chep OCR (Tesseract) vao app
+        run: |
+          mkdir -p www/tesseract/lang
+          cp node_modules/tesseract.js/dist/tesseract.min.js node_modules/tesseract.js/dist/worker.min.js www/tesseract/
+          cp node_modules/tesseract.js-core/tesseract-core-lstm.wasm.js node_modules/tesseract.js-core/tesseract-core-simd-lstm.wasm.js www/tesseract/
+          cp node_modules/@tesseract.js-data/eng/4.0.0_best_int/eng.traineddata.gz www/tesseract/lang/
+
+      - name: Tao project iOS
+        run: npx cap add ios
+
+      - name: Cap quyen camera va Zalo
+        run: |
+          P=ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Add :NSCameraUsageDescription string Dung camera de quet ma QR tren to lot" $P
+          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryUsageDescription string Chon anh ma QR de doc" $P
+          /usr/libexec/PlistBuddy -c "Add :LSApplicationQueriesSchemes array" $P
+          /usr/libexec/PlistBuddy -c "Add :LSApplicationQueriesSchemes:0 string zalo" $P
+
+      - name: Dong bo web vao iOS
+        run: npx cap sync ios
+
+      - name: Build (khong ky)
+        run: |
+          xcodebuild \
+            -workspace ios/App/App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath "$PWD/build/App.xcarchive" \
+            archive \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+
+      - name: Dong goi IPA
+        run: |
+          mkdir Payload
+          cp -R build/App.xcarchive/Products/Applications/App.app Payload/
+          zip -qry LotKeep.ipa Payload
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LotKeep-ipa
+          path: LotKeep.ipa
