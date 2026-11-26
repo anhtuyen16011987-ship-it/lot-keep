@@ -16,7 +16,7 @@ jobs:
           node-version: 20
 
       - name: Cai thu vien
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Chep OCR (Tesseract) vao app
         run: |
@@ -50,9 +50,11 @@ jobs:
       - name: Cap quyen camera va Zalo
         run: |
           P=ios/App/App/Info.plist
-          /usr/libexec/PlistBuddy -c "Add :NSCameraUsageDescription string Dung camera de quet ma QR tren to lot" $P
-          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryUsageDescription string Chon anh ma QR de doc" $P
-          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryAddUsageDescription string Luu anh to lot vao thu vien Anh" $P
+          setkey() { /usr/libexec/PlistBuddy -c "Set :$1 $2" $P 2>/dev/null || /usr/libexec/PlistBuddy -c "Add :$1 string $2" $P; }
+          setkey NSCameraUsageDescription "Dung camera de quet ma QR tren to lot"
+          setkey NSPhotoLibraryUsageDescription "Chon anh ma QR de doc"
+          setkey NSPhotoLibraryAddUsageDescription "Luu anh to lot vao thu vien Anh"
+          /usr/libexec/PlistBuddy -c "Delete :LSApplicationQueriesSchemes" $P 2>/dev/null || true
           /usr/libexec/PlistBuddy -c "Add :LSApplicationQueriesSchemes array" $P
           /usr/libexec/PlistBuddy -c "Add :LSApplicationQueriesSchemes:0 string zalo" $P
 
