@@ -10130,12 +10130,12 @@ video{width:100%;border-radius:12px;background:#000;max-height:50vh}
 .msg{font-size:13px;color:var(--ok);min-height:18px;margin-top:6px}
 </style></head><body>
 <div class="ov" id="ov"><p>Nhấn giữ vào ảnh → <b>Chia sẻ</b> hoặc <b>Sao chép</b> → chọn Zalo / dán vào Zalo.</p><img id="ovimg" alt="Bảng Keep"><button class="g" id="ovx" style="width:100%;margin-top:10px">Đóng</button></div>
-<h1>📋 Quét lot → Bảng Keep</h1>
+<h1>📋 Quét Lot Keep - Lê Trung Tuyến</h1>
 
 <div class="card">
   <button id="bScan" class="btn" style="display:none">📷 Quét QR</button>
   <div id="cam" style="display:none;margin-top:8px"><video id="v" playsinline muted></video></div>
-  <label for="fPhoto" class="btn" id="lbPhoto" style="display:block">📷 Chụp ảnh tờ lot (tự lấy Model, Cutting, Roll No)</label>
+  <label for="fPhoto" class="btn" id="lbPhoto" style="display:block">📷 Chụp ảnh tờ Lot (tự lấy Model, Cutting, Roll No)</label>
   <input type="file" id="fPhoto" accept="image/*" capture="environment" style="display:none">
   <div class="raw" id="raw"></div>
   <canvas id="cv" hidden></canvas>
@@ -10151,7 +10151,7 @@ video{width:100%;border-radius:12px;background:#000;max-height:50vh}
   <label>Nội dung keep thêm (gõ tay)</label><input id="extra" placeholder="Gõ nội dung khác...">
   <label>Số lượng keep</label>
   <div class="qty"><button class="chip" id="qbox" style="flex:0 0 auto">1 Box</button><input id="qty" inputmode="numeric" placeholder="Ghi tay số lượng"><b>PCS</b></div>
-  <label>Vị trí trên cuộn</label>
+  <label>Vị trí trên Roll</label>
   <div class="chips" id="posChips"><button class="chip" data-p="Đầu roll">Đầu roll</button><button class="chip" data-p="Cuối roll">Cuối roll</button></div>
   <div class="qty" style="margin-top:8px"><input id="meter" inputmode="decimal" placeholder="Hoặc ghi số mét"><b>m</b></div>
   <label>Cách xử lý</label>
@@ -10170,7 +10170,7 @@ video{width:100%;border-radius:12px;background:#000;max-height:50vh}
 
 <div class="card">
   <b>Bảng Keep (<span id="cnt">0</span>)</b>
-  <div class="tw" style="margin-top:8px"><table><thead><tr><th>#</th><th>Giờ</th><th>Model</th><th>Cutting</th><th>Roll No</th><th>Vị trí</th><th>Nội dung keep</th><th>SL keep (sửa)</th><th>Kích thước phụ</th><th>Cách xử lý</th><th></th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
+  <div class="tw" style="margin-top:8px"><table><thead><tr><th>STT</th><th>Giờ</th><th>Model</th><th>Cutting</th><th>Roll No</th><th>Vị trí</th><th>Nội dung keep</th><th>SL keep</th><th>Kích thước phụ</th><th>Cách xử lý</th><th></th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
   <label>Lọc theo ngày</label><div class="row"><input type="date" id="fd"><button class="g" id="bAll" style="flex:0 0 90px">Tất cả</button></div>
   <button id="bImg" style="width:100%;margin-top:10px;background:#0068ff">🖼️ Chia sẻ cả bảng dạng ảnh (giữ nguyên bảng)</button><div class="msg" id="msg2"></div>
   <button class="r" id="bDel" style="width:100%;margin-top:10px">🗑️ Xoá hết bảng</button>
