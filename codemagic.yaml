@@ -1,0 +1,78 @@
+workflows:
+  build-ipa:
+    name: Build IPA
+    instance_type: mac_mini_m2
+    max_build_duration: 30
+    environment:
+      xcode: latest
+      node: 20
+      cocoapods: default
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+    scripts:
+      - name: Cai thu vien
+        script: npm install
+
+      - name: Chep OCR (Tesseract) vao app
+        script: |
+          mkdir -p www/tesseract/lang
+          cp node_modules/tesseract.js/dist/tesseract.min.js node_modules/tesseract.js/dist/worker.min.js www/tesseract/
+          cp node_modules/tesseract.js-core/tesseract-core-lstm.wasm.js node_modules/tesseract.js-core/tesseract-core-simd-lstm.wasm.js www/tesseract/
+          cp node_modules/@tesseract.js-data/eng/4.0.0_best_int/eng.traineddata.gz www/tesseract/lang/
+
+      - name: Tao project iOS
+        script: npx cap add ios
+
+      - name: Gan icon app
+        script: |
+          D=ios/App/App/Assets.xcassets/AppIcon.appiconset
+          mkdir -p $D
+          cp assets/icon-1024.png "$D/AppIcon-512@2x.png"
+          cat > $D/Contents.json <<'JSON'
+          {
+            "images": [
+              {
+                "filename": "AppIcon-512@2x.png",
+                "idiom": "universal",
+                "platform": "ios",
+                "size": "1024x1024"
+              }
+            ],
+            "info": { "author": "xcode", "version": 1 }
+          }
+          JSON
+
+      - name: Cap quyen camera va Zalo
+        script: |
+          P=ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Add :NSCameraUsageDescription string Dung camera de quet ma QR tren to lot" $P
+          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryUsageDescription string Chon anh ma QR de doc" $P
+          /usr/libexec/PlistBuddy -c "Add :LSApplicationQueriesSchemes array" $P
+          /usr/libexec/PlistBuddy -c "Add :LSApplicationQueriesSchemes:0 string zalo" $P
+
+      - name: Dong bo web vao iOS
+        script: npx cap sync ios
+
+      - name: Build (khong ky)
+        script: |
+          xcodebuild \
+            -workspace ios/App/App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath "$PWD/build/App.xcarchive" \
+            archive \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+
+      - name: Dong goi IPA
+        script: |
+          mkdir Payload
+          cp -R build/App.xcarchive/Products/Applications/App.app Payload/
+          zip -qry LotKeep.ipa Payload
+
+    artifacts:
+      - LotKeep.ipa
