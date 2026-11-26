@@ -52,7 +52,7 @@ jobs:
           P=ios/App/App/Info.plist
           /usr/libexec/PlistBuddy -c "Add :NSCameraUsageDescription string Dung camera de quet ma QR tren to lot" $P
           /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryUsageDescription string Chon anh ma QR de doc" $P
-          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryAddUsageDescription string Luu anh to lot vao thu vien anh" $P
+          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryAddUsageDescription string Luu anh to lot vao thu vien Anh" $P
           /usr/libexec/PlistBuddy -c "Add :LSApplicationQueriesSchemes array" $P
           /usr/libexec/PlistBuddy -c "Add :LSApplicationQueriesSchemes:0 string zalo" $P
 
