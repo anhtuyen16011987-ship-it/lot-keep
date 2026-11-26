@@ -10112,7 +10112,7 @@ function findAlignmentPattern(matrix, alignmentPatternQuads, topRight, topLeft, 
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f172a;--card:#1e293b;--tx:#e5e7eb;--mut:#94a3b8;--ac:#60a5fa;--bd:#334155}}
 :root[data-theme="dark"]{--bg:#0f172a;--card:#1e293b;--tx:#e5e7eb;--mut:#94a3b8;--ac:#60a5fa;--bd:#334155}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px -apple-system,Segoe UI,Roboto,sans-serif;padding:12px;max-width:640px;margin:auto}
-h1{font-size:20px;margin:4px 0 12px}.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:12px}
+.hero{margin:4px 0 12px;font-size:22px;font-weight:800;line-height:1.3}.hero small{font-weight:600;color:var(--mut);font-size:18px;margin:0 4px}.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:12px}
 label{font-size:13px;color:var(--mut);display:block;margin:8px 0 3px}
 input[type=text],input[type=date],input:not([type]){width:100%;padding:10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:16px}
 button{border:0;border-radius:10px;padding:11px 14px;font-size:15px;background:var(--ac);color:#fff;font-weight:600}
@@ -10130,7 +10130,7 @@ video{width:100%;border-radius:12px;background:#000;max-height:50vh}
 .msg{font-size:13px;color:var(--ok);min-height:18px;margin-top:6px}
 </style></head><body>
 <div class="ov" id="ov"><p>Nhấn giữ vào ảnh → <b>Chia sẻ</b> hoặc <b>Sao chép</b> → chọn Zalo / dán vào Zalo.</p><img id="ovimg" alt="Bảng Keep"><button class="g" id="ovx" style="width:100%;margin-top:10px">Đóng</button></div>
-<h1>📋 Quét lot → Bảng Keep</h1>
+<div class="hero">📷 Quét Lot Keep <small>- Lê Trung Tuyến</small> 📋</div>
 
 <div class="card">
   <button id="bScan" class="btn" style="display:none">📷 Quét QR</button>
@@ -10155,7 +10155,6 @@ video{width:100%;border-radius:12px;background:#000;max-height:50vh}
   <div class="chips" id="posChips"><button class="chip" data-p="Đầu roll">Đầu roll</button><button class="chip" data-p="Cuối roll">Cuối roll</button></div>
   <div class="qty" style="margin-top:8px"><input id="meter" inputmode="decimal" placeholder="Hoặc ghi số mét"><b>m</b></div>
   <label>Cách xử lý</label>
-  <div class="chips" style="margin-bottom:8px"><button class="chip" id="fixQC">Keep lọc QC</button></div>
   <div class="qty"><button class="chip" id="fixDan" style="flex:0 0 auto">Dán vạch</button><input id="fixMm" inputmode="decimal" placeholder="nhập số"><b>mm</b></div>
   <div class="chips" style="margin-top:8px"><button class="chip" id="fixOver">quá vạch keep QC</button></div>
   <input id="fixTxt" placeholder="Cách xử lý khác (gõ tay)" style="margin-top:8px">
@@ -10164,13 +10163,12 @@ video{width:100%;border-radius:12px;background:#000;max-height:50vh}
   <button class="g" id="bDim" style="width:100%">＋ Thêm kích thước</button>
   <div class="raw" id="blkmsg"></div>
   <button id="bSaveZ" style="width:100%;margin-top:12px;background:#0068ff">💾 Lưu & gửi Zalo (bản mới lưu)</button>
-  <div class="row" style="margin-top:8px"><button id="bSave">💾 Chỉ lưu</button><button class="g" id="bClear">Xoá form</button></div>
   <div class="msg" id="msg"></div><div class="msg" id="msgz"></div>
 </div>
 
 <div class="card">
   <b>Bảng Keep (<span id="cnt">0</span>)</b>
-  <div class="tw" style="margin-top:8px"><table><thead><tr><th>STT</th><th>Giờ</th><th>Model</th><th>Cutting</th><th>Roll No</th><th>Vị trí</th><th>Nội dung keep</th><th>SL keep (sửa)</th><th>Kích thước phụ</th><th>Cách xử lý</th><th></th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
+  <div class="tw" style="margin-top:8px"><table><thead><tr><th>Stt</th><th>Giờ</th><th>Model</th><th>Cutting</th><th>Roll No</th><th>Vị trí</th><th>Nội dung keep</th><th>SL keep (sửa)</th><th>Kích thước phụ</th><th>Cách xử lý</th><th></th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
   <label>Lọc theo ngày</label><div class="row"><input type="date" id="fd"><button class="g" id="bAll" style="flex:0 0 90px">Tất cả</button></div>
   <button id="bImg" style="width:100%;margin-top:10px;background:#0068ff">🖼️ Chia sẻ cả bảng dạng ảnh (giữ nguyên bảng)</button><div class="msg" id="msg2"></div>
   <button class="r" id="bDel" style="width:100%;margin-top:10px">🗑️ Xoá hết bảng</button>
@@ -10232,7 +10230,15 @@ async function findQR(S,R){const W=S.width,H=S.height,c=$("cv"),x=c.getContext("
       for(let y=0;y+h<=H+1&&!t;y+=sty)for(let xx=0;xx+w<=W+1&&!t;xx+=stx){t=tr(Math.min(xx,W-w),Math.min(y,H-h),w,h,Math.min(w,800),inv);if(++n%6===0){R("⏳ Đang tìm QR... ("+n+")");await sleep(0)}}}
     if(t)break}
   return t}
-$("fPhoto").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;$("roll").value="";$("model").value="";$("cut").value="";syncBlk();
+/* Lưu ảnh lot vào Thư viện ảnh (Ảnh) của iPhone; trình duyệt thì tải về */
+async function savePhoto(f){const C=(window.Capacitor&&window.Capacitor.Plugins)||{},d=new Date(),p=n=>String(n).padStart(2,"0"),
+  name="lot-"+d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+"-"+p(d.getHours())+p(d.getMinutes())+p(d.getSeconds())+".jpg";
+  try{
+    if(C.Media){const du=await new Promise((ok,no)=>{const fr=new FileReader();fr.onload=()=>ok(fr.result);fr.onerror=()=>no(fr.error);fr.readAsDataURL(f)});
+      await C.Media.savePhoto({path:du});say2("🖼️ Đã lưu ảnh vào Thư viện ảnh")}
+    else{const u=URL.createObjectURL(f),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);say2("📁 Đã tải ảnh về máy: "+name)}
+  }catch(err){say2("⚠️ Không lưu được ảnh vào Thư viện: "+(err&&err.message||err)+" (kiểm tra Cài đặt › Lot Keep › Ảnh)")}}
+$("fPhoto").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;savePhoto(f);$("roll").value="";$("model").value="";$("cut").value="";syncBlk();
   const R=t=>{$("raw").textContent=t};R("⏳ Đang đọc ảnh...");
   try{const S=await loadImg(f,2000),t=await findQR(S,R);
     if(t)apply(t.data,S,t.L);else if(getOcr())doOcr(S,null,true);else R("⚠️ Ảnh "+S.width+"×"+S.height+": không thấy QR. Chụp gần hơn, QR chiếm ≥ 1/4 khung hình, tránh chói.")
@@ -10244,20 +10250,19 @@ function flt(){const f=$("fd").value;return recs.map((r,i)=>[r,i]).filter(x=>!f|
 function fl(){return flt().map(x=>x[0])}
 function render(){const L=flt();$("cnt").textContent=L.length+(L.length!==recs.length?"/"+recs.length:"");const tb=$("tb");tb.innerHTML="";
   L.forEach((x,j)=>{const r=x[0],i=x[1],tr=document.createElement("tr");
-    [j+1,r.time,r.model,r.cut,r.roll||"",r.opts].forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.appendChild(td)});
+    [j+1,r.time,r.model,r.cut,r.roll||"",r.pos||"",r.opts].forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.appendChild(td)});
     const tq=document.createElement("td"),iq=document.createElement("input");iq.value=r.qty||"";iq.style.cssText="width:90px;padding:6px;text-align:center";iq.onchange=()=>{r.qty=pcs(iq.value);iq.value=r.qty;persist()};tq.appendChild(iq);tr.appendChild(tq);
     const td2=document.createElement("td");td2.textContent=r.dims;tr.appendChild(td2);const td3=document.createElement("td");td3.textContent=r.fix||"";tr.appendChild(td3);
     const tz=document.createElement("td"),bz=document.createElement("button");bz.textContent="💬";bz.style.cssText="padding:4px 8px;background:#0068ff";bz.onclick=()=>zalo(r);tz.appendChild(bz);tr.appendChild(tz);
     const td=document.createElement("td"),b=document.createElement("button");b.textContent="✕";b.className="r";b.style.padding="4px 8px";b.onclick=()=>{recs.splice(i,1);persist();render()};td.appendChild(b);tr.appendChild(td);tb.appendChild(tr)})}
-$("bSave").onclick=()=>{
+function doSave(){
   const dims=[...$("dims").children].map(d=>({v:d.children[0].value.trim(),t:d.children[1].value.trim()})).filter(x=>x.v||x.t);
   const opts=[...sel];if($("extra").value.trim())opts.push($("extra").value.trim());
   if(!$("model").value&&!$("cut").value){say("Chưa có thông tin lot");return}
   const d=new Date(),p=n=>String(n).padStart(2,"0");
   recs.push({qty:[$("qbox").classList.contains("on")?"1 Box":"",pcs($("qty").value)].filter(Boolean).join(", "),d:d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate()),time:p(d.getDate())+"/"+p(d.getMonth()+1)+" "+p(d.getHours())+":"+p(d.getMinutes()),model:$("model").value.trim(),roll:$("roll").value.trim(),pos:posText(),fix:fixText(),cut:$("cut").value.trim(),opts:opts.join(", "),dims:dimsText(dims)});
-  persist();render();clearForm();say("✅ Đã lưu")};
+  persist();render();clearForm();say("✅ Đã lưu")}
 function clearForm(){["model","cut","roll","extra","qty","meter","fixMm","fixTxt"].forEach(i=>$(i).value="");$("raw").textContent="";$("qbox").classList.remove("on");sel.clear();document.querySelectorAll(".chip").forEach(c=>c.classList.remove("on"));$("dims").innerHTML="";$("blkmsg").textContent="";addDim()}
-$("bClear").onclick=clearForm;
 function tsv(){return ["Giờ\tModel\tCutting\tRoll No\tVị trí\tNội dung keep\tSố lượng keep\tKích thước phụ\tCách xử lý"].concat(fl().map(r=>[r.time,r.model,r.cut,r.roll||"",r.pos||"",r.opts,r.qty||"",r.dims,r.fix||""].join("\t"))).join("\n")}
 $("bDel").onclick=()=>{if(confirm("Xoá toàn bộ bảng Keep?")){recs=[];persist();render()}};
 function say2(t){$("msg2").textContent=t;$("msg").textContent=t;setTimeout(()=>{$("msg2").textContent="";$("msg").textContent=""},5000)}
@@ -10268,10 +10273,10 @@ function oneText(r){const B=boldU;return "📋 "+B("KEEP")+" "+r.time+"\n"+B("Mo
 function copyT(t){try{const a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;top:0;opacity:0";document.body.appendChild(a);a.select();a.setSelectionRange(0,99999);const ok=document.execCommand("copy");a.remove();if(ok)return true}catch(e){}try{navigator.clipboard.writeText(t);return true}catch(e){}return false}
 async function sendZalo(t){copyT(t);say2(gon()?"✅ Đã copy. Vào nhóm, nhấn giữ ô nhắn tin → Dán":"✅ Đã copy. Mở Zalo, chọn chỗ gửi rồi Dán");openApp()}
 function zalo(r){if(!r){say2("Chưa có bản keep nào");return}sendZalo(oneText(r))}
-$("bSaveZ").onclick=()=>{const n=recs.length;$("bSave").onclick();if(recs.length>n)zalo(recs[recs.length-1])};
+$("bSaveZ").onclick=()=>{const n=recs.length;doSave();if(recs.length>n)zalo(recs[recs.length-1])};
 $("fd").onchange=render;$("bAll").onclick=()=>{$("fd").value="";render()};
 function wrapT(c,t,w){t=String(t||"");const out=[];t.split("\n").forEach(par=>{let line="";par.split(" ").forEach(wd=>{const test=line?line+" "+wd:wd;if(c.measureText(test).width>w&&line){out.push(line);line=wd}else line=test});out.push(line)});return out}
-function drawTable(L){const F="-apple-system,Arial,sans-serif",cols=[["#",44],["Giờ",120],["Model",150],["Cutting",190],["Roll No",170],["Vị trí",120],["Nội dung keep",230],["SL keep",120],["Kích thước phụ",240],["Cách xử lý",230]],W=cols.reduce((a,c)=>a+c[1],0),P=12,LH=26,TH=60,HH=44;
+function drawTable(L){const F="-apple-system,Arial,sans-serif",cols=[["Stt",52],["Giờ",120],["Model",150],["Cutting",190],["Roll No",170],["Vị trí",120],["Nội dung keep",230],["SL keep",120],["Kích thước phụ",240],["Cách xử lý",230]],W=cols.reduce((a,c)=>a+c[1],0),P=12,LH=26,TH=60,HH=44;
   const cv=document.createElement("canvas"),c=cv.getContext("2d");c.font="20px "+F;
   const rows=L.map((r,i)=>[String(i+1),r.time,r.model,r.cut,r.roll||"",r.pos||"",r.opts,r.qty,r.dims,r.fix||""].map((v,k)=>wrapT(c,v,cols[k][1]-2*P)));
   const hs=rows.map(cs=>Math.max(...cs.map(x=>x.length))*LH+2*P);
@@ -10360,16 +10365,15 @@ async function doOcr(S,L,solo){const R=$("raw"),old=solo?"":R.textContent,t0=Dat
     const sec=((Date.now()-t0)/1000).toFixed(1)+"s";
     if(rn){$("roll").value=rn;R.textContent=old+" ✅ Roll No: "+rn+" ("+sec+")"}else R.textContent=old+" ⚠️ Không đọc được Roll No, hãy chụp rõ dòng ROLL No hoặc gõ tay"
   }catch(e){R.textContent=old+" ⚠️ Lỗi đọc Roll No: "+(e&&e.message||e)}}
-if($("fRoll"))$("fRoll").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;$("raw").textContent="⏳ Đang xử lý ảnh...";
+if($("fRoll"))$("fRoll").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;savePhoto(f);$("raw").textContent="⏳ Đang xử lý ảnh...";
   try{const S=await loadImg(f,2000),t=await findQR(S,m=>{$("raw").textContent=m});await doOcr(S,t?t.L:null,true)}
   catch(err){$("raw").textContent="⚠️ "+(err&&err.message||err)}};
 window.addEventListener("load",()=>setTimeout(()=>{const p=getOcr();if(p)p.catch(()=>{})},600));
 document.querySelectorAll("#posChips .chip").forEach(b=>b.onclick=()=>b.classList.toggle("on"));
 $("fixDan").onclick=()=>{$("fixDan").classList.toggle("on");if(!$("fixDan").classList.contains("on"))$("fixOver").classList.remove("on")};
 $("fixOver").onclick=()=>{$("fixOver").classList.toggle("on");if($("fixOver").classList.contains("on"))$("fixDan").classList.add("on")};
-$("fixQC").onclick=()=>$("fixQC").classList.toggle("on");
 $("fixMm").oninput=()=>{if($("fixMm").value.trim())$("fixDan").classList.add("on")};
 function posText(){const a=[...document.querySelectorAll("#posChips .chip.on")].map(b=>b.dataset.p),m=$("meter").value.trim();if(m)a.push(m+" m");return a.join(", ")}
-function fixText(){const a=[],mm=$("fixMm").value.trim();if($("fixQC").classList.contains("on"))a.push("Keep lọc QC");if($("fixDan").classList.contains("on"))a.push("Dán vạch"+(mm?" "+mm+" mm":"")+($("fixOver").classList.contains("on")?" quá vạch keep QC":""));if($("fixTxt").value.trim())a.push($("fixTxt").value.trim());return a.join("; ")}
+function fixText(){const a=[],mm=$("fixMm").value.trim();if($("fixDan").classList.contains("on"))a.push("Dán vạch"+(mm?" "+mm+" mm":"")+($("fixOver").classList.contains("on")?" quá vạch keep QC":""));if($("fixTxt").value.trim())a.push($("fixTxt").value.trim());return a.join("; ")}
 render();
 </script></body></html>
