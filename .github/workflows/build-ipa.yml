@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
 
@@ -27,6 +27,25 @@ jobs:
 
       - name: Tao project iOS
         run: npx cap add ios
+
+      - name: Gan icon app
+        run: |
+          D=ios/App/App/Assets.xcassets/AppIcon.appiconset
+          mkdir -p $D
+          cp assets/icon-1024.png "$D/AppIcon-512@2x.png"
+          cat > $D/Contents.json <<'JSON'
+          {
+            "images": [
+              {
+                "filename": "AppIcon-512@2x.png",
+                "idiom": "universal",
+                "platform": "ios",
+                "size": "1024x1024"
+              }
+            ],
+            "info": { "author": "xcode", "version": 1 }
+          }
+          JSON
 
       - name: Cap quyen camera va Zalo
         run: |
